@@ -11,6 +11,8 @@ editor:
 
 ## Data
 
+# Laurens Version Hackday 2024
+
 This TB Hackday script uses (pre-processed) RNA sequencing data from the following study:
 
 1.  [Liu et al. 2023](https://pubmed.ncbi.nlm.nih.gov/37390827/) (*Cell Rep Med*) **Blood transcriptional correlates of BCG-induced protection against tuberculosis in rhesus macaques**
