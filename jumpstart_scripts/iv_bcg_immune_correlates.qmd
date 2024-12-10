@@ -234,9 +234,11 @@ response_by_dose_protection_plot<- function(var1 = "(L)#CD4:AnyG2T17") {
   return(gg)
 }
 
-gg1 =  response_by_dose_protection_plot(var1 = "(L)#CD4:AnyG2T17")
-gg2 =  response_by_dose_protection_plot(var1 = "(L)#CD8:AnyG2T17")
+gg1 =  response_by_dose_protection_plot(var1 = "(L)%CD4:G+2-17-T+")
+gg2 =  response_by_dose_protection_plot(var1 = "(L)%CD4:G+2+17-T-")
+pdf("~/seatrac-hackday-2024/figures/plot 1.pdf", width = 8, height = 8)
 gridExtra::grid.arrange(gg1, gg2, ncol =1)
+dev.off()
 
 ```
 
@@ -312,6 +314,22 @@ diffs_tbl = diffs %>% left_join(key_extra, by = c("variable_name" = "key"))
 ## Create volcano style plots
 
 Generate plots show that show the -log10 p-values from Wilcoxon tests (comparing protected and unprotected groups) on the y-axis and the group difference on the x-axis. Points high and to the right are more likely to be significantly associated with protection. Points high and to the left are more associated with risk. Notice that we facet wrap by tissue source (i.e., Lung vs. Periphery) and by time point. What do blue points to the right suggest? *What might the red points at time point week 0 (i.e., baseline) suggest?*
+
+``` {R}
+diffs_tbl %>%
+   mutate(tissue2 = ifelse(stringr::str_detect(pattern = "ung", string = tissue), 
+                           "Lung", "Periphery")) %>%
+  filter(tp == "nAUC") %>%
+  filter(tissue2 == "Lung") %>%
+  arrange(desc("mean_difference <0")) %>%
+  filter(mean_difference <0) %>%
+  arrange(wilcox_p)
+
+  
+
+
+```
+
 
 ```{r}
 #| warning: false
